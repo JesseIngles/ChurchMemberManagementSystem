@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  fotografia   String? 
+  userName     String
+  password     String
+  phonenumber  String @default("000-000-000") @unique
+}
+
+model Membro {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  codigoMembro        String   @unique
+  nomeCompleto        String   @unique
+  fotografia          String?
+  phonenumber  String @default("000-000-000") @unique
+  localNascimento     String
+  dataNascimento      String   @default("mm/dd/yyyy")
+  dataBaptismoAguas   String   @default("mm/dd/yyyy")
+  dataBaptismoEsp     String?   @default("mm/dd/yyyy")
+  estadoCivil         String
+  ministro            Ministro?
+}
+
+model Ministro {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  dataBaptismoEsp   String   @default("mm/dd/yyyy")
+  membroid   String   @unique
+  membro     Membro   @relation(fields: [membroid], references: [id])
+}

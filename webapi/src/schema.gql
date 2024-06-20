@@ -1,0 +1,182 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: String!
+
+  """Example field (placeholder)"""
+  fotografia: String!
+
+  """Example field (placeholder)"""
+  userName: String!
+
+  """Example field (placeholder)"""
+  password: String!
+
+  """Example field (placeholder)"""
+  phonenumber: String!
+}
+
+type Membro {
+  id: String!
+
+  """Example field (placeholder)"""
+  codigoMembro: String!
+
+  """Example field (placeholder)"""
+  nomeCompleto: String!
+
+  """Example field (placeholder)"""
+  fotografia: String!
+
+  """Example field (placeholder)"""
+  phonenumber: String!
+
+  """Example field (placeholder)"""
+  localNascimento: String!
+
+  """Example field (placeholder)"""
+  dataNascimento: String!
+
+  """Example field (placeholder)"""
+  dataBaptismoEsp: String!
+
+  """Example field (placeholder)"""
+  dataBaptismoAguas: String!
+
+  """Example field (placeholder)"""
+  estadoCivil: String!
+}
+
+type Ministro {
+  id: String!
+
+  """Example field (placeholder)"""
+  dataBaptismoEsp: String!
+
+  """Example field (placeholder)"""
+  membroId: String!
+
+  """Example field (placeholder)"""
+  membro: Membro!
+}
+
+type Query {
+  findAll: [User!]!
+  user(id: String!): User!
+  LoginUser(username: String!, password: String!): String!
+  findAllMembros: [Membro!]!
+  Membro(findOneMembro: String!): Membro!
+  Ministro(findOneMinistro: String!): Ministro!
+  Ministros: [Ministro!]!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: String!): User!
+  createMembro(createMembroInput: CreateMembroInput!): Membro!
+  updateMembro(updateMembroInput: UpdateMembroInput!): Membro!
+  deleteMembro(deleteMembro: String!): Membro!
+  createMinistro(createMinistro: CreateMinistroInput!): Ministro!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  userName: String!
+
+  """Example field (placeholder)"""
+  fotografia: String!
+
+  """Example field (placeholder)"""
+  password: String!
+
+  """Example field (placeholder)"""
+  phonenumber: String!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  userName: String
+
+  """Example field (placeholder)"""
+  fotografia: String
+
+  """Example field (placeholder)"""
+  password: String
+
+  """Example field (placeholder)"""
+  phonenumber: String
+  id: String!
+}
+
+input CreateMembroInput {
+  """Example field (placeholder)"""
+  codigoMembro: String!
+
+  """Example field (placeholder)"""
+  nomeCompleto: String!
+
+  """Example field (placeholder)"""
+  fotografia: String!
+
+  """Example field (placeholder)"""
+  phonenumber: String!
+
+  """Example field (placeholder)"""
+  localNascimento: String!
+
+  """Example field (placeholder)"""
+  dataNascimento: String!
+
+  """Example field (placeholder)"""
+  dataBaptismoEsp: String!
+
+  """Example field (placeholder)"""
+  dataBaptismoAguas: String!
+
+  """Example field (placeholder)"""
+  estadoCivil: String!
+}
+
+input UpdateMembroInput {
+  """Example field (placeholder)"""
+  codigoMembro: String
+
+  """Example field (placeholder)"""
+  nomeCompleto: String
+
+  """Example field (placeholder)"""
+  fotografia: String
+
+  """Example field (placeholder)"""
+  phonenumber: String
+
+  """Example field (placeholder)"""
+  localNascimento: String
+
+  """Example field (placeholder)"""
+  dataNascimento: String
+
+  """Example field (placeholder)"""
+  dataBaptismoEsp: String
+
+  """Example field (placeholder)"""
+  dataBaptismoAguas: String
+
+  """Example field (placeholder)"""
+  estadoCivil: String
+  id: String!
+}
+
+input CreateMinistroInput {
+  """Example field (placeholder)"""
+  membroId: String!
+
+  """Example field (placeholder)"""
+  dataBaptismoEsp: String!
+
+  """Example field (placeholder)"""
+  fotografia: String!
+}
