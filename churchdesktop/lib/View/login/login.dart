@@ -32,11 +32,17 @@ class _LoginState extends State<Login> {
           Container(
             decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(width: 30, color: Colors.white),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      offset: Offset(0, 3),
+                      blurRadius: 7,
+                      spreadRadius: 5)
+                ],
                 borderRadius: BorderRadius.circular(10)),
-            width: 450,
+            width: 400,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(25.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,7 +63,7 @@ class _LoginState extends State<Login> {
                           borderRadius: BorderRadius.circular(20)),
                       child: TextField(
                         decoration: InputDecoration(
-                            hintText: 'Nome Completo',
+                            hintText: 'Username',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: BorderSide.none),
@@ -65,7 +71,7 @@ class _LoginState extends State<Login> {
                             filled: true),
                       )),
                   SizedBox(
-                    height: 05,
+                    height: 10,
                   ),
                   Container(
                       decoration: BoxDecoration(
@@ -80,6 +86,9 @@ class _LoginState extends State<Login> {
                             fillColor: Color(0xFFFAFAFA),
                             filled: true),
                       )),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Container(
                       decoration: BoxDecoration(
                           color: Colors.white,

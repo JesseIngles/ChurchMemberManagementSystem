@@ -1,5 +1,4 @@
 import 'package:churchdesktop/View/dashboard/dashboard.dart';
-import 'package:churchdesktop/View/login/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
