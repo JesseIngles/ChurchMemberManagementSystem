@@ -15,4 +15,24 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-F
+                          /*Container(
+                              width: 500,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 7,
+                                        spreadRadius: 5)
+                                  ]),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    hintText: 'Pesquise por alguém ...',
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide.none),
+                                    fillColor: Color(0xFFFAFAFA),
+                                    filled: true),
+                              )) */

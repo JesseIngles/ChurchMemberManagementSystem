@@ -32,19 +32,45 @@ class _RegistrationState extends State<Registration> {
           Container(
             decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(width: 30, color: Colors.white),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      offset: Offset(0, 3),
+                      blurRadius: 7,
+                      spreadRadius: 5)
+                ],
                 borderRadius: BorderRadius.circular(10)),
-            width: 450,
+            width: 400,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(25.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 10, color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              offset: Offset(0, 3),
+                              blurRadius: 7,
+                              spreadRadius: 5)
+                        ]),
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.amber[700],
+                      size: 60,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
-                    'Entrar na sua Conta!',
+                    'Faça o seu registro!',
                     style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 16,
                         color: Color(0xFF111827),
                         fontWeight: FontWeight.bold),
                   ),
@@ -57,7 +83,7 @@ class _RegistrationState extends State<Registration> {
                           borderRadius: BorderRadius.circular(20)),
                       child: TextField(
                         decoration: InputDecoration(
-                            hintText: 'Username...',
+                            hintText: 'Username',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: BorderSide.none),
@@ -65,7 +91,7 @@ class _RegistrationState extends State<Registration> {
                             filled: true),
                       )),
                   SizedBox(
-                    height: 05,
+                    height: 10,
                   ),
                   Container(
                       decoration: BoxDecoration(
@@ -73,7 +99,23 @@ class _RegistrationState extends State<Registration> {
                           borderRadius: BorderRadius.circular(10)),
                       child: TextField(
                         decoration: InputDecoration(
-                            hintText: 'Password...',
+                            hintText: 'Telefone',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none),
+                            fillColor: Color(0xFFFAFAFA),
+                            filled: true),
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            hintText: 'Password',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: BorderSide.none),
@@ -105,7 +147,7 @@ class _RegistrationState extends State<Registration> {
                         flex: 5,
                         child: Row(
                           children: [
-                            Text('Esqueceu a palavra passe',
+                            Text('',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
@@ -126,7 +168,7 @@ class _RegistrationState extends State<Registration> {
                         borderRadius: BorderRadius.circular(5)),
                     child: Center(
                       child: Text(
-                        'Entrar',
+                        'Cadastrar-se',
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -137,24 +179,27 @@ class _RegistrationState extends State<Registration> {
                   SizedBox(
                     height: 40,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Não tem uma conta?',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        ' Comece por aqui',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.amber[700],
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
+                  GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Já téns uma conta?',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Fazer Login',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.amber[700],
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),

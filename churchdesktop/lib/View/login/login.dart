@@ -1,3 +1,4 @@
+import 'package:churchdesktop/View/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -8,6 +9,16 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController _username = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
+  void login() {
+    if (_username.text.isNotEmpty && _password.text.isNotEmpty) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Dashboard()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +73,7 @@ class _LoginState extends State<Login> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)),
                       child: TextField(
+                        controller: _username,
                         decoration: InputDecoration(
                             hintText: 'Username',
                             border: OutlineInputBorder(
@@ -70,7 +82,7 @@ class _LoginState extends State<Login> {
                             fillColor: Color(0xFFFAFAFA),
                             filled: true),
                       )),
-                  SizedBox(
+                  /*SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -85,7 +97,7 @@ class _LoginState extends State<Login> {
                                 borderSide: BorderSide.none),
                             fillColor: Color(0xFFFAFAFA),
                             filled: true),
-                      )),
+                      )),*/
                   SizedBox(
                     height: 10,
                   ),
@@ -94,6 +106,7 @@ class _LoginState extends State<Login> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
                       child: TextField(
+                        controller: _password,
                         decoration: InputDecoration(
                             hintText: 'Password',
                             border: OutlineInputBorder(
@@ -140,19 +153,24 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    width: 450,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: Colors.amber[700],
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Center(
-                      child: Text(
-                        'Entrar',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                  GestureDetector(
+                    onTap: () {
+                      login();
+                    },
+                    child: Container(
+                      width: 450,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.amber[700],
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          'Entrar',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

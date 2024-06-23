@@ -1,9 +1,10 @@
-/*import 'package:churchdesktop/Util/graphql_service.dart';
+import 'package:churchdesktop/Model/user.model.dart';
+import 'package:churchdesktop/Util/graphql.dart';
+import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
-class UserController
-{
-  final GraphQLService _graphQLService;
-  UserController(this._graphQLService)
-
-  
-}*/
+class UserController with ChangeNotifier {
+  User? _user;
+  GraphQLClient client = GraphQLConfig.clientToQuery();
+  //User? get user = _user;
+}

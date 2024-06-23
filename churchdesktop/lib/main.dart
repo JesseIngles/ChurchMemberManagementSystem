@@ -1,4 +1,6 @@
 import 'package:churchdesktop/View/dashboard/dashboard.dart';
+import 'package:churchdesktop/View/login/login.dart';
+import 'package:churchdesktop/View/registration/registration.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +16,7 @@ class ChurchManagementApp extends StatelessWidget {
       ),
       title: 'Siloé',
       debugShowCheckedModeBanner: false,
-      home: Dashboard()
+      home: const Login()
     );
   }
 }
