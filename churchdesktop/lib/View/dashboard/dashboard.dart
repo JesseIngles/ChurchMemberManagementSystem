@@ -9,7 +9,7 @@ import 'package:churchdesktop/widgets/widgetModel/PaginatedTableAniversariantes.
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -17,20 +17,21 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int totalmembros = 0, totalMinistros = 0, homens = 0, mulheres = 0, criancas = 0;
+
   void fetchData() async {
     List<Membro> membros = await MembroController().getAllMembros();
-    totalmembros = membros.length;
+    setState(() {
+      totalmembros = membros.length;
+    });
 
-    List<Ministro> ministros = await MinistroController().getAllMinistros();
-    totalMinistros = ministros.length;
-
+    /*List<Ministro>? ministros = await MinistroController().getAllMinistros();
+    setState(() {
+      totalMinistros = ministros.length;
+    });*/
   }
-
-  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchData();
   }
@@ -45,9 +46,7 @@ class _DashboardState extends State<Dashboard> {
           children: [
             Expanded(
               flex: 2,
-              child: Menu(
-                index: 1,
-              ),
+              child: Menu(index: 1),
             ),
             Expanded(
               flex: 8,
@@ -167,141 +166,148 @@ class _DashboardState extends State<Dashboard> {
                               padding: const EdgeInsets.only(left: 30),
                               child: Row(
                                 children: [
-                                  Container(
-                                    width: 280,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        width: 20,
+                                  Expanded(
+                                    child: Container(
+                                      width: 280,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
+                                        border: Border.all(
+                                          width: 20,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Total de membros',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Total de membros',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(height: 40),
-                                        Text(
-                                          totalmembros.toString(),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
+                                          SizedBox(height: 40),
+                                          Text(
+                                            totalmembros.toString(),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: 20),
-                                  Container(
-                                    width: 280,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        width: 20,
+                                  Expanded(
+                                    child: Container(
+                                      width: 280,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
+                                        border: Border.all(
+                                          width: 20,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Total de ministros',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Total de ministros',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(height: 40),
-                                        Text(
-                                          '700',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
+                                          SizedBox(height: 40),
+                                          Text(
+                                            totalMinistros.toString(),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: 20),
-                                  Container(
-                                    width: 280,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        width: 20,
+                                  Expanded(
+                                    child: Container(
+                                      width: 280,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
+                                        border: Border.all(
+                                          width: 20,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Homens | Mulheres | Crianças',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Homens | Mulheres | Crianças',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(height: 40),
-                                        Text(
-                                          '160 | 100 | 3 000',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
+                                          SizedBox(height: 40),
+                                          Text(
+                                            '0  |  0 |   0',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                             SizedBox(height: 30),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  width: 20,
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    width: 20,
+                                    color: Colors.white,
+                                  ),
                                   color: Colors.white,
                                 ),
-                                color: Colors.white,
-                              ),
-                              margin: EdgeInsets.only(left: 35, right: 5),
-                              child: Column(
-                                children: [
-                                  Expanded(flex: 1, child: 
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Próximos Aniversariantes',
-                                        style: TextStyle(
-                                          color: Colors.grey.withOpacity(0.5),
-                                        ),
+                                margin: EdgeInsets.only(left: 35, right: 5),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Próximos Aniversariantes',
+                                            style: TextStyle(
+                                              color: Colors.grey.withOpacity(0.5),
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.more_vert_rounded,
+                                            color: Colors.grey.withOpacity(0.5),
+                                          ),
+                                        ],
                                       ),
-                                      Icon(
-                                        Icons.more_vert_rounded,
-                                        color: Colors.grey.withOpacity(0.5),
-                                      ),
-                                      
-                                    ],
-                                  )),
-                                  Expanded(child: 
-                                  PaginatedtableAniversariantes(), flex: 8,)
-                                ],
+                                    ),
+                                    Expanded(
+                                      flex: 8,
+                                      child: PaginatedtableAniversariantes(),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

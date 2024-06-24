@@ -45,12 +45,20 @@ class MinistroController {
     const String query = r'''
       query {
         Ministros {
-          id
           dataBaptismoEsp
-          membroId
           biografia, 
           membro {
-          
+            id
+          codigoMembro
+          nomeCompleto
+          fotografia
+          phonenumber
+          localNascimento
+          dataNascimento
+          dataBaptismoEsp
+          dataBaptismoAguas
+          estadoCivil
+
           }
         }
       }
@@ -60,10 +68,10 @@ class MinistroController {
     final QueryResult result = await client.query(options);
     if (result.hasException) {
       print(result.exception);
-      throw result.exception!;
+      //throw result.exception!;
     }
 
-    _ministros = Ministro.fromJsonList(result.data?['Ministros']);
+    _ministros = Ministro.fromJsonList(result!.data?['Ministros']);
     return _ministros!;
   }
 }

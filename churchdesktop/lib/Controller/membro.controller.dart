@@ -11,7 +11,6 @@ class MembroController {
     const String mutation = r'''
       mutation createMembro($id: String!, $codigoMembro: String!, $nomeCompleto: String!, $fotografia: String!, $phonenumber: String!, $localNascimento: String!, $dataNascimento: String!, $dataBaptismoEsp: String!, $dataBaptismoAguas: String!, $estadoCivil: String!) {
         createMembro(input: {
-          id: $id,
           codigoMembro: $codigoMembro,
           nomeCompleto: $nomeCompleto,
           fotografia: $fotografia,
@@ -42,6 +41,7 @@ class MembroController {
         'estadoCivil': membro.estadoCivil,
       },
     );
+    
 
     final QueryResult result = await client.mutate(options);
 

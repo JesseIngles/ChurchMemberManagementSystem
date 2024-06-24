@@ -1,8 +1,8 @@
 import 'package:churchdesktop/widgets/listaMembros.dart';
-import 'package:churchdesktop/widgets/listaMinistros.dart';
 import 'package:flutter/material.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 import 'package:churchdesktop/Controller/membro.controller.dart';
+import 'package:intl/intl.dart';
 
 class PaginatedtableAniversariantes extends StatefulWidget {
   @override
@@ -27,18 +27,21 @@ class _PaginatedtableAniversariantesState
     try {
       List<Membro> membros = await _membroController.getAllMembros();
       List<Membro> filtro = [];
+
+      // Filtrar membros cujo aniversário está a menos de 7 dias
       for (var item in membros) {
-        String dataEntrada = "10/08/2006";
+        // Converter data de nascimento para DateTime
+        DateTime dataNascimento = _parseDataNascimento(item.dataNascimento);
 
-        List<String> partes = item.dataNascimento.split('/');
-        String dataFormatada = '${partes[2]}-${partes[1]}-${partes[0]}';
+        // Calcular diferença em dias entre hoje e a data de nascimento
+        int diferencaDias = DateTime.now().difference(dataNascimento).inDays;
 
-        DateTime data = DateTime.parse(dataFormatada);
-
-        if ((DateTime.now().difference(data).inDays) < 7) {
+        // Filtrar se a diferença for menor que 7 dias
+        if (diferencaDias < 7) {
           filtro.add(item);
         }
       }
+
       setState(() {
         _membroDataSource = MembroDataSource(filtro);
         _isLoading = false;
@@ -49,6 +52,19 @@ class _PaginatedtableAniversariantesState
         _isLoading = false;
       });
     }
+  }
+
+  DateTime _parseDataNascimento(String dataNascimento) {
+    // Formato esperado dd/mm/yyyy
+    List<String> partes = dataNascimento.split('/');
+    if (partes.length != 3) {
+      throw FormatException("Formato de data inválido: $dataNascimento");
+    }
+    DateTime data = DateFormat('dd/MM/yyyy').parseStrict(dataNascimento);
+
+    // Formatar para outro formato, se necessário
+    //DateTime dataFormatada = DateFormat('yyyy-MM-dd').format(data);
+    return data;
   }
 
   void showMessage(String message) {
@@ -65,6 +81,7 @@ class _PaginatedtableAniversariantesState
           ? Center(child: CircularProgressIndicator())
           : _membroDataSource != null
               ? SingleChildScrollView(
+                
                   child: PaginatedDataTable(
                     rowsPerPage: _rowsPerPage,
                     columns: [
