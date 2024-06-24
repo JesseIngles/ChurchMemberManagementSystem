@@ -11,5 +11,5 @@ export class CreateMinistroInput {
   dataBaptismoEsp: string;
 
   @Field(() => String, { description: 'Example field (placeholder)' })
-  fotografia: Base64<'png' | 'jpg' | 'jpeg'>;
+  biografia: string
 }

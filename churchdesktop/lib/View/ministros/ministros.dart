@@ -1,6 +1,8 @@
 import 'package:churchdesktop/View/search/search.dart';
+import 'package:churchdesktop/widgets/demo.dart';
 import 'package:churchdesktop/widgets/listaMinistros.dart';
 import 'package:churchdesktop/widgets/menu.dart';
+import 'package:churchdesktop/widgets/widgetModel/PaginatedTableMinistros.dart';
 import 'package:flutter/material.dart';
 
 class Ministros extends StatefulWidget {
@@ -107,7 +109,7 @@ class _MinistrosState extends State<Ministros> {
                                     ),
                                     CircleAvatar(
                                       minRadius: 15,
-                                      child: Image.asset('assets/logotipo.png'),
+                                      child: Icon(Icons.person),
                                     ),
                                     SizedBox(
                                       width: 07,
@@ -136,8 +138,11 @@ class _MinistrosState extends State<Ministros> {
                               ])),
                       Expanded(
                           flex: 9,
-                          child: Container(
-                            child: ListaMinistros(),
+                          child: Center(
+                            child: Container(
+                              color: Colors.white,
+                              child: PaginatedTableMinistros(),
+                            ),
                           ))
                     ])),
               )

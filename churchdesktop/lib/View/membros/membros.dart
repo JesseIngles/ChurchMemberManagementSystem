@@ -1,10 +1,12 @@
 import 'package:churchdesktop/View/search/search.dart';
-import 'package:churchdesktop/widgets/listaMembros.dart';
+import 'package:churchdesktop/widgets/demo.dart';
+import 'package:churchdesktop/widgets/listaMinistros.dart';
 import 'package:churchdesktop/widgets/menu.dart';
+import 'package:churchdesktop/widgets/widgetModel/PaginatedTableMinistros.dart';
 import 'package:flutter/material.dart';
 
 class Membros extends StatefulWidget {
-  const Membros({super.key});
+  Membros({super.key});
 
   @override
   State<Membros> createState() => _MembrosState();
@@ -24,14 +26,14 @@ class _MembrosState extends State<Membros> {
                 ),
               ),
               Expanded(
-                  flex: 8,
-                  child: Container(
-                      width: 200,
-                      margin: EdgeInsets.only(left: 10, top: 10, right: 20),
-                      child: Column(children: [
-                        Expanded(
-                            flex: 1,
-                            child: Row(
+                flex: 8,
+                child: Container(
+                    width: 200,
+                    margin: EdgeInsets.only(left: 10, top: 10, right: 20),
+                    child: Column(children: [
+                      Expanded(
+                          flex: 1,
+                          child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
@@ -107,7 +109,7 @@ class _MembrosState extends State<Membros> {
                                     ),
                                     CircleAvatar(
                                       minRadius: 15,
-                                      child: Image.asset('assets/logotipo.png'),
+                                      child: Icon(Icons.person),
                                     ),
                                     SizedBox(
                                       width: 07,
@@ -133,10 +135,17 @@ class _MembrosState extends State<Membros> {
                                     )
                                   ],
                                 )
-                              ],
-                            )),
-                        Expanded(flex: 9, child: ListaMembros())
-                      ])))
+                              ])),
+                      Expanded(
+                          flex: 9,
+                          child: Center(
+                            child: Container(
+                              color: Colors.white,
+                              child: PaginatedTableDemo(),
+                            ),
+                          ))
+                    ])),
+              )
             ])));
   }
 }

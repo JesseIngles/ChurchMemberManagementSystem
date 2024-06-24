@@ -15,4 +15,7 @@ export class Ministro
 
   @Field(() => Membro, { description: 'Example field (placeholder)' })
   membro: Membro
+
+  @Field(() => String, { description: 'Example field (placeholder)' })
+  biografia: string
 }

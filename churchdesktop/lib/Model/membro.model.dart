@@ -52,4 +52,8 @@ class Membro {
       'estadoCivil': estadoCivil,
     };
   }
+
+   static List<Membro> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => Membro.fromJson(json)).toList();
+  }
 }

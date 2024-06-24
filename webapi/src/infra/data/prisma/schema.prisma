@@ -34,4 +34,5 @@ model Ministro {
   dataBaptismoEsp   String   @default("mm/dd/yyyy")
   membroid   String   @unique
   membro     Membro   @relation(fields: [membroid], references: [id])
+  biografia  String 
 }

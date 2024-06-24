@@ -1,5 +1,7 @@
+import 'package:churchdesktop/Controller/user.controller.dart';
 import 'package:churchdesktop/View/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -11,11 +13,25 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
+  bool _rememberMe = false;
 
-  void login() {
+  void login() async {
     if (_username.text.isNotEmpty && _password.text.isNotEmpty) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Dashboard()));
+      bool success = await UserController().login(_username.text, _password.text);
+      if (success) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Dados inválidos'),
+          duration: Duration(seconds: 2),
+        ));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Por favor, preencha todos os campos'),
+        duration: Duration(seconds: 2),
+      ));
     }
   }
 
@@ -82,22 +98,6 @@ class _LoginState extends State<Login> {
                             fillColor: Color(0xFFFAFAFA),
                             filled: true),
                       )),
-                  /*SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            hintText: 'Telefone',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none),
-                            fillColor: Color(0xFFFAFAFA),
-                            filled: true),
-                      )),*/
                   SizedBox(
                     height: 10,
                   ),
@@ -107,6 +107,7 @@ class _LoginState extends State<Login> {
                           borderRadius: BorderRadius.circular(10)),
                       child: TextField(
                         controller: _password,
+                        obscureText: true,
                         decoration: InputDecoration(
                             hintText: 'Password',
                             border: OutlineInputBorder(
@@ -125,8 +126,12 @@ class _LoginState extends State<Login> {
                         child: Row(
                           children: [
                             Checkbox(
-                              value: false,
-                              onChanged: (value) {},
+                              value: _rememberMe,
+                              onChanged: (value) {
+                                setState(() {
+                                  _rememberMe = value!;
+                                });
+                              },
                             ),
                             Text("Lembrar-me",
                                 style: TextStyle(
@@ -154,9 +159,7 @@ class _LoginState extends State<Login> {
                     height: 20,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      login();
-                    },
+                    onTap: login,
                     child: Container(
                       width: 450,
                       height: 40,

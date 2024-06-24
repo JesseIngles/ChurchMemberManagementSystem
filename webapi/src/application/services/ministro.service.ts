@@ -11,6 +11,7 @@ export class MinistoService {
     return await this.prismaService.ministro.create({
       data: {
         dataBaptismoEsp: createMinistroInput.dataBaptismoEsp,
+        biografia: createMinistroInput.biografia,
         membro: {
           connect: {
             id: createMinistroInput.membroId,

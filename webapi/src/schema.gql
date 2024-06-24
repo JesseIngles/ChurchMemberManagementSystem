@@ -60,6 +60,9 @@ type Ministro {
 
   """Example field (placeholder)"""
   membro: Membro!
+
+  """Example field (placeholder)"""
+  biografia: String!
 }
 
 type Query {
@@ -178,5 +181,5 @@ input CreateMinistroInput {
   dataBaptismoEsp: String!
 
   """Example field (placeholder)"""
-  fotografia: String!
+  biografia: String!
 }
