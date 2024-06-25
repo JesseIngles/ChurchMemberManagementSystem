@@ -1,33 +1,30 @@
-import 'package:churchdesktop/Controller/ministro.controller.dart';
-import 'package:churchdesktop/Model/ministro.model.dart';
-import 'package:churchdesktop/widgets/listaMembros.dart';
-import 'package:churchdesktop/widgets/listaMinistros.dart';
 import 'package:flutter/material.dart';
-import 'package:churchdesktop/Model/membro.model.dart';
-import 'package:churchdesktop/Controller/membro.controller.dart';
+import 'package:churchdesktop/Model/ministro.model.dart';
+import 'package:churchdesktop/Controller/ministro.controller.dart';
 
 class PaginatedTableMinistros extends StatefulWidget {
   @override
-  _PaginatedTableMinistrosState createState() => _PaginatedTableMinistrosState();
+  _PaginatedTableMinistrosState createState() =>
+      _PaginatedTableMinistrosState();
 }
 
 class _PaginatedTableMinistrosState extends State<PaginatedTableMinistros> {
-  MinistroDataSource? _membroDataSource;
-  final int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
+  List<Ministro> _ministros = [];
   bool _isLoading = true;
   final MinistroController _ministroController = MinistroController();
 
   @override
   void initState() {
     super.initState();
-    fetchMembros();
+    fetchMinistros();
   }
 
-  Future<void> fetchMembros() async {
+  Future<void> fetchMinistros() async {
     try {
-      List<Ministro> minitros = await _ministroController.getAllMinistros();
+      List<Ministro> ministros =
+          await _ministroController.getAllMinistros();
       setState(() {
-        _membroDataSource = MinistroDataSource(minitros);
+        _ministros = ministros;
         _isLoading = false;
       });
     } catch (e) {
@@ -44,27 +41,60 @@ class _PaginatedTableMinistrosState extends State<PaginatedTableMinistros> {
     );
   }
 
+  void deleteMinistro(String id) async {
+    try {
+      await _ministroController.deleteMinistro(id);
+      await fetchMinistros(); // Atualiza a lista após a exclusão
+      showMessage('Ministro $id excluído com sucesso.');
+    } catch (e) {
+      showMessage('Erro ao excluir ministro: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: _isLoading
-    ? Center(child: CircularProgressIndicator())
-    : _membroDataSource != null
-        ? SingleChildScrollView(
-            child: PaginatedDataTable(
-              rowsPerPage: _rowsPerPage,
-              columns: [
-                DataColumn(label: Text('Código Membro')),
-                DataColumn(label: Text('Nome Completo')),
-                DataColumn(label: Text('Fotografia')),
-                DataColumn(label: Text('Telefone')),
-                DataColumn(label: Text('Local Nascimento')),
-                DataColumn(label: Text('Data Nascimento')),
-              ],
-              source: _membroDataSource!,
-            ),
-          ) : Center(child: Text('Nenhum dado disponível')),
+          ? Center(child: CircularProgressIndicator())
+          : _ministros.isEmpty
+              ? Center(child: Text('Nenhum dado disponível'))
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    columns: [
+                      DataColumn(label: Text('Código Membro')),
+                      DataColumn(label: Text('Nome Completo')),
+                      DataColumn(label: Text('Fotografia')),
+                      DataColumn(label: Text('Telefone')),
+                      DataColumn(label: Text('Local Nascimento')),
+                      DataColumn(label: Text('Data Nascimento')),
+                      DataColumn(label: Text('Ações')),
+                    ],
+                    rows: _ministros
+                        .map(
+                          (ministro) => DataRow(
+                            cells: [
+                              DataCell(Text(ministro.membro.codigoMembro)),
+                              DataCell(Text(ministro.membro.nomeCompleto)),
+                              DataCell(Image.network(ministro.membro.fotografia)),
+                              DataCell(Text(ministro.membro.phonenumber)),
+                              DataCell(Text(ministro.membro.localNascimento)),
+                              DataCell(
+                                Text(ministro.membro.dataNascimento.toString()),
+                              ),
+                              DataCell(
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () => deleteMinistro(ministro.id),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
     );
   }
 }

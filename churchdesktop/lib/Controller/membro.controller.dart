@@ -6,21 +6,56 @@ class MembroController {
   List<Membro>? _membros = [];
   List<Membro>? get membros => _membros;
   GraphQLClient client = GraphQLConfig.clientToQuery();
+  Future<bool> deleteMembro(String id) async {
+    const String mutation = r'''
+      mutation DeleteMembro($id: String!) {
+        deleteMembro(id: $id) {
+          id
+        }
+      }
+    ''';
+
+    final MutationOptions options = MutationOptions(
+      document: gql(mutation),
+      variables: {'id': id},
+    );
+
+    final QueryResult result = await client.mutate(options);
+
+    if (result.hasException) {
+      print('Erro ao deletar membro: ${result.exception}');
+      return false;
+    }
+
+    return true;
+  }
 
   Future<bool> addMembro(Membro membro) async {
     const String mutation = r'''
-      mutation createMembro($id: String!, $codigoMembro: String!, $nomeCompleto: String!, $fotografia: String!, $phonenumber: String!, $localNascimento: String!, $dataNascimento: String!, $dataBaptismoEsp: String!, $dataBaptismoAguas: String!, $estadoCivil: String!) {
-        createMembro(input: {
-          codigoMembro: $codigoMembro,
-          nomeCompleto: $nomeCompleto,
-          fotografia: $fotografia,
-          phonenumber: $phonenumber,
-          localNascimento: $localNascimento,
-          dataNascimento: $dataNascimento,
-          dataBaptismoEsp: $dataBaptismoEsp,
-          dataBaptismoAguas: $dataBaptismoAguas,
-          estadoCivil: $estadoCivil
-        }) {
+      mutation CreateMembro(
+        $codigoMembro: String!,
+        $nomeCompleto: String!,
+        $fotografia: String!,
+        $phonenumber: String!,
+        $localNascimento: String!,
+        $dataNascimento: String!,
+        $dataBaptismoEsp: String!,
+        $dataBaptismoAguas: String!,
+        $estadoCivil: String!
+      ) {
+        createMembro(
+          createMembroInput: {
+            codigoMembro: $codigoMembro,
+            nomeCompleto: $nomeCompleto,
+            fotografia: $fotografia,
+            phonenumber: $phonenumber,
+            localNascimento: $localNascimento,
+            dataNascimento: $dataNascimento,
+            dataBaptismoEsp: $dataBaptismoEsp,
+            dataBaptismoAguas: $dataBaptismoAguas,
+            estadoCivil: $estadoCivil
+          }
+        ) {
           id
         }
       }
@@ -29,7 +64,6 @@ class MembroController {
     final MutationOptions options = MutationOptions(
       document: gql(mutation),
       variables: {
-        'id': membro.id,
         'codigoMembro': membro.codigoMembro,
         'nomeCompleto': membro.nomeCompleto,
         'fotografia': membro.fotografia,
@@ -41,11 +75,10 @@ class MembroController {
         'estadoCivil': membro.estadoCivil,
       },
     );
-    
 
     final QueryResult result = await client.mutate(options);
-
-    if (result.hasException) {
+    //print(result.toString());
+    if (result.hasException || result.data?['createMembro']['id'] == null) {
       print(result.exception);
       return false;
     }
@@ -81,4 +114,6 @@ class MembroController {
     _membros = Membro.fromJsonList(result.data?['findAllMembros']);
     return _membros!;
   }
+
+  updateMembro(Membro updatedMembro) {}
 }

@@ -1,5 +1,4 @@
-import 'package:churchdesktop/widgets/listaMembros.dart';
-import 'package:churchdesktop/widgets/listaMinistros.dart';
+import 'package:churchdesktop/editation/edit.membro.dart';
 import 'package:flutter/material.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 import 'package:churchdesktop/Controller/membro.controller.dart';
@@ -10,8 +9,7 @@ class PaginatedTableDemo extends StatefulWidget {
 }
 
 class _PaginatedTableDemoState extends State<PaginatedTableDemo> {
-  MembroDataSource? _membroDataSource;
-  final int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
+  List<Membro> _membros = [];
   bool _isLoading = true;
   final MembroController _membroController = MembroController();
 
@@ -25,7 +23,7 @@ class _PaginatedTableDemoState extends State<PaginatedTableDemo> {
     try {
       List<Membro> membros = await _membroController.getAllMembros();
       setState(() {
-        _membroDataSource = MembroDataSource(membros);
+        _membros = membros;
         _isLoading = false;
       });
     } catch (e) {
@@ -42,27 +40,62 @@ class _PaginatedTableDemoState extends State<PaginatedTableDemo> {
     );
   }
 
+  void deleteMembro(String id) async {
+    try {
+      await _membroController.deleteMembro(id);
+      await fetchMembros(); // Atualiza a lista após a exclusão
+      showMessage('Membro $id excluído com sucesso.');
+    } catch (e) {
+      showMessage('Erro ao excluir membro: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: _isLoading
-    ? Center(child: CircularProgressIndicator())
-    : _membroDataSource != null
-        ? SingleChildScrollView(
-            child: PaginatedDataTable(
-              rowsPerPage: _rowsPerPage,
-              columns: [
-                DataColumn(label: Text('Código Membro')),
-                DataColumn(label: Text('Nome Completo')),
-                DataColumn(label: Text('Fotografia')),
-                DataColumn(label: Text('Telefone')),
-                DataColumn(label: Text('Local Nascimento')),
-                DataColumn(label: Text('Data Nascimento')),
-              ],
-              source: _membroDataSource!,
-            ),
-          ) : Center(child: Text('Nenhum dado disponível')),
+          ? Center(child: CircularProgressIndicator())
+          : _membros.isEmpty
+              ? Center(child: Text('Nenhum dado disponível'))
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    columns: [
+                      DataColumn(
+                        label: Text('Código Membro'),
+
+                      ),
+                      DataColumn(label: Text('Nome Completo')),
+                      DataColumn(label: Text('Fotografia')),
+                      DataColumn(label: Text('Telefone')),
+                      DataColumn(label: Text('Local Nascimento')),
+                      DataColumn(label: Text('Data Nascimento')),
+                      DataColumn(label: Text('Ações')),
+                    ],
+                    rows: _membros
+                        .map(
+                          (membro) => DataRow(
+                            cells: [
+                              DataCell(Text(membro.codigoMembro),
+                                  ),
+                              DataCell(Text(membro.nomeCompleto)),
+                              DataCell(Image.network(membro.fotografia)),
+                              DataCell(Text(membro.phonenumber)),
+                              DataCell(Text(membro.localNascimento)),
+                              DataCell(Text(membro.dataNascimento.toString())),
+                              DataCell(
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () => deleteMembro(membro.id),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
     );
   }
 }

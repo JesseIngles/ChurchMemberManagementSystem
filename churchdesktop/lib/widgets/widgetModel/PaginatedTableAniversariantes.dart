@@ -37,13 +37,13 @@ class _PaginatedtableAniversariantesState
         int diferencaDias = DateTime.now().difference(dataNascimento).inDays;
 
         // Filtrar se a diferença for menor que 7 dias
-        if (diferencaDias < 7) {
+        if (diferencaDias < 360) {
           filtro.add(item);
         }
       }
 
       setState(() {
-        _membroDataSource = MembroDataSource(filtro);
+        _membroDataSource = MembroDataSource(membros, context);
         _isLoading = false;
       });
     } catch (e) {

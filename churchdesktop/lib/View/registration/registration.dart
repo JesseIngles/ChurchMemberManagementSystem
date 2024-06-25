@@ -191,12 +191,17 @@ class _RegistrationState extends State<Registration> {
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          'Fazer Login',
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.amber[700],
-                              fontWeight: FontWeight.bold),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Fazer Login',
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.amber[700],
+                                fontWeight: FontWeight.bold),
+                          ),
                         )
                       ],
                     ),

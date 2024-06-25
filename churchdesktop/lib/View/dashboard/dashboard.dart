@@ -2,6 +2,7 @@ import 'package:churchdesktop/Controller/membro.controller.dart';
 import 'package:churchdesktop/Controller/ministro.controller.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 import 'package:churchdesktop/Model/ministro.model.dart';
+import 'package:churchdesktop/Model/user.model.dart';
 import 'package:churchdesktop/View/registration/register.membro.dart';
 import 'package:churchdesktop/View/search/search.dart';
 import 'package:churchdesktop/widgets/menu.dart';
@@ -16,18 +17,22 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int totalmembros = 0, totalMinistros = 0, homens = 0, mulheres = 0, criancas = 0;
-
+  int totalmembros = 0,
+      totalMinistros = 0,
+      homens = 0,
+      mulheres = 0,
+      criancas = 0;
+  
   void fetchData() async {
     List<Membro> membros = await MembroController().getAllMembros();
     setState(() {
       totalmembros = membros.length;
     });
 
-    /*List<Ministro>? ministros = await MinistroController().getAllMinistros();
+    List<Ministro>? ministros = await MinistroController().getAllMinistros();
     setState(() {
       totalMinistros = ministros.length;
-    });*/
+    });
   }
 
   @override
@@ -168,7 +173,7 @@ class _DashboardState extends State<Dashboard> {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      width: 280,
+                                      width: 260,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
@@ -178,7 +183,8 @@ class _DashboardState extends State<Dashboard> {
                                         ),
                                       ),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'Total de membros',
@@ -202,7 +208,7 @@ class _DashboardState extends State<Dashboard> {
                                   SizedBox(width: 20),
                                   Expanded(
                                     child: Container(
-                                      width: 280,
+                                      width: 260,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
@@ -212,7 +218,8 @@ class _DashboardState extends State<Dashboard> {
                                         ),
                                       ),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'Total de ministros',
@@ -236,7 +243,7 @@ class _DashboardState extends State<Dashboard> {
                                   SizedBox(width: 20),
                                   Expanded(
                                     child: Container(
-                                      width: 280,
+                                      width: 260,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
@@ -246,7 +253,8 @@ class _DashboardState extends State<Dashboard> {
                                         ),
                                       ),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'Homens | Mulheres | Crianças',
@@ -287,12 +295,14 @@ class _DashboardState extends State<Dashboard> {
                                     Expanded(
                                       flex: 1,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             'Próximos Aniversariantes',
                                             style: TextStyle(
-                                              color: Colors.grey.withOpacity(0.5),
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
                                             ),
                                           ),
                                           Icon(

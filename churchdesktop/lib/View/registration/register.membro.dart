@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
@@ -16,7 +15,6 @@ class _RegisterMemberState extends State<RegisterMember> {
   final _controller = MembroController();
 
   // Form fields
-
   String? _codigoMembro;
   String? _nomeCompleto;
   String? _phonenumber;
@@ -43,28 +41,35 @@ class _RegisterMemberState extends State<RegisterMember> {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
 
-      var imageBytes = await _image!.readAsBytes();
-      String base64 = base64Encode(imageBytes);
-      final membro = Membro(
-        id: "1",
-        codigoMembro: _codigoMembro!,
-        nomeCompleto: _nomeCompleto!,
-        fotografia: _image != null ? base64 : '',
-        phonenumber: _phonenumber!,
-        localNascimento: _localNascimento!,
-        dataNascimento: _dataNascimento!,
-        dataBaptismoEsp: _dataBaptismoEsp!,
-        dataBaptismoAguas: _dataBaptismoAguas!,
-        estadoCivil: _estadoCivil!,
-      );
+      if (_image != null) {
+        List<int> imageBytes = await _image!.readAsBytesSync();
+        String base64 = 'data:image/png;base64,${base64Encode(imageBytes)}';
 
-      final success = await _controller.addMembro(membro);
-      if (success) {
-        Navigator.pop(context);
+        final membro = Membro(
+          id: "",
+          codigoMembro: _codigoMembro!,
+          nomeCompleto: _nomeCompleto!,
+          fotografia: base64,
+          phonenumber: _phonenumber!,
+          localNascimento: _localNascimento!,
+          dataNascimento: _dataNascimento!,
+          dataBaptismoEsp: _dataBaptismoEsp!,
+          dataBaptismoAguas: _dataBaptismoAguas!,
+          estadoCivil: _estadoCivil!,
+        );
+
+        final success = await _controller.addMembro(membro);
+        if (success) {
+          Navigator.pop(context);
+        } else {
+          // Show error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to add member')),
+          );
+        }
       } else {
-        // Show error message
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add member')),
+          SnackBar(content: Text('No image selected')),
         );
       }
     }
@@ -73,105 +78,142 @@ class _RegisterMemberState extends State<RegisterMember> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register Member')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 10, color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              offset: Offset(0, 3),
-                              blurRadius: 7,
-                              spreadRadius: 5)
-                        ]),
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.amber[700],
-                      size: 60,
+      appBar: AppBar(title: Text('Registrar Membro')),
+      body: Center(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    offset: Offset(0, 3),
+                    blurRadius: 7,
+                    spreadRadius: 5)
+              ],
+              borderRadius: BorderRadius.circular(10)),
+          width: 350,
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 10, color: Colors.white),
+                          borderRadius: BorderRadius.circular(50),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                offset: Offset(0, 3),
+                                blurRadius: 7,
+                                spreadRadius: 5)
+                          ]),
+                      child: _image == null
+                          ? Icon(
+                              Icons.person,
+                              color: Colors.amber[700],
+                              size: 60,
+                            )
+                          : Image.file(_image!, height: 100),
                     ),
                   ),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Código do Membro'),
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter a código do membro' : null,
-                  onSaved: (value) => _codigoMembro = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Nome Completo'),
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter a nome completo' : null,
-                  onSaved: (value) => _nomeCompleto = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Phone Number'),
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter a phone number' : null,
-                  onSaved: (value) => _phonenumber = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Local de Nascimento'),
-                  validator: (value) => value!.isEmpty
-                      ? 'Please enter a local de nascimento'
-                      : null,
-                  onSaved: (value) => _localNascimento = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Data de Nascimento'),
-                  validator: (value) => value!.isEmpty
-                      ? 'Please enter a data de nascimento'
-                      : null,
-                  onSaved: (value) => _dataNascimento = value,
-                ),
-                TextFormField(
-                  decoration:
-                      InputDecoration(labelText: 'Data de Baptismo Espiritual'),
-                  validator: (value) => value!.isEmpty
-                      ? 'Please enter a data de baptismo espiritual'
-                      : null,
-                  onSaved: (value) => _dataBaptismoEsp = value,
-                ),
-                TextFormField(
-                  decoration:
-                      InputDecoration(labelText: 'Data de Baptismo em Águas'),
-                  validator: (value) => value!.isEmpty
-                      ? 'Please enter a data de baptismo em águas'
-                      : null,
-                  onSaved: (value) => _dataBaptismoAguas = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Estado Civil'),
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter a estado civil' : null,
-                  onSaved: (value) => _estadoCivil = value,
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  children: [
-                    _image == null
-                        ? Text('No image selected.')
-                        : Image.file(_image!, height: 100),
-                    IconButton(
-                      icon: Icon(Icons.camera_alt),
-                      onPressed: _pickImage,
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Código do Membro'),
+                    validator: (value) => value!.isEmpty
+                        ? 'Please enter a código do membro'
+                        : null,
+                    onSaved: (value) => _codigoMembro = value,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Nome Completo'),
+                    validator: (value) =>
+                        value!.isEmpty ? 'Please enter a nome completo' : null,
+                    onSaved: (value) => _nomeCompleto = value,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Phone Number'),
+                    validator: (value) =>
+                        value!.isEmpty ? 'Please enter a phone number' : null,
+                    onSaved: (value) => _phonenumber = value,
+                  ),
+                  TextFormField(
+                    decoration:
+                        InputDecoration(labelText: 'Local de Nascimento'),
+                    validator: (value) => value!.isEmpty
+                        ? 'Please enter a local de nascimento'
+                        : null,
+                    onSaved: (value) => _localNascimento = value,
+                  ),
+                  TextFormField(
+                    decoration:
+                        InputDecoration(labelText: 'Data de Nascimento'),
+                    validator: (value) => value!.isEmpty
+                        ? 'Please enter a data de nascimento'
+                        : null,
+                    onSaved: (value) => _dataNascimento = value,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                        labelText: 'Data de Baptismo Espiritual'),
+                    validator: (value) => value!.isEmpty
+                        ? 'Please enter a data de baptismo espiritual'
+                        : null,
+                    onSaved: (value) => _dataBaptismoEsp = value,
+                  ),
+                  TextFormField(
+                    decoration:
+                        InputDecoration(labelText: 'Data de Baptismo em Águas'),
+                    validator: (value) => value!.isEmpty
+                        ? 'Please enter a data de baptismo em águas'
+                        : null,
+                    onSaved: (value) => _dataBaptismoAguas = value,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Estado Civil'),
+                    validator: (value) =>
+                        value!.isEmpty ? 'Please enter a estado civil' : null,
+                    onSaved: (value) => _estadoCivil = value,
+                  ),
+                  SizedBox(height: 16.0),
+                  Row(
+                    children: [
+                      _image == null
+                          ? Text('No image selected.')
+                          : Text(
+                              'Mudar Imagem'), //Image.file(_image!, height: 100),
+                      IconButton(
+                        icon: Icon(Icons.camera_alt),
+                        onPressed: _pickImage,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+                  GestureDetector(
+                    onTap: () {
+                      _saveMember();
+                    },
+                    child: Container(
+                      width: 450,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.amber[700],
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          'Entrar',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: _saveMember,
-                  child: Text('Save Member'),
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

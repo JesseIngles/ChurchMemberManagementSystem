@@ -1,7 +1,7 @@
 import 'package:churchdesktop/Model/membro.model.dart';
 
 class Ministro {
-  String? id;
+  String id;
   String dataBaptismoEsp;
   String membroId;
   Membro membro;

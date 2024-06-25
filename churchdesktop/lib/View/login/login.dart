@@ -1,5 +1,6 @@
 import 'package:churchdesktop/Controller/user.controller.dart';
 import 'package:churchdesktop/View/dashboard/dashboard.dart';
+import 'package:churchdesktop/View/registration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +18,8 @@ class _LoginState extends State<Login> {
 
   void login() async {
     if (_username.text.isNotEmpty && _password.text.isNotEmpty) {
-      bool success = await UserController().login(_username.text, _password.text);
+      bool success =
+          await UserController().login(_username.text, _password.text);
       if (success) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
@@ -192,12 +194,20 @@ class _LoginState extends State<Login> {
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          ' Comece por aqui',
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.amber[700],
-                              fontWeight: FontWeight.bold),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Registration()));
+                          },
+                          child: Text(
+                            ' Comece por aqui',
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.amber[700],
+                                fontWeight: FontWeight.bold),
+                          ),
                         )
                       ],
                     ),

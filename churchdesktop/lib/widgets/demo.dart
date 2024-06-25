@@ -25,7 +25,7 @@ class _PaginatedTableDemoState extends State<PaginatedTableDemo> {
     try {
       List<Membro> membros = await _membroController.getAllMembros();
       setState(() {
-        _membroDataSource = MembroDataSource(membros);
+        _membroDataSource = MembroDataSource(membros, context);
         _isLoading = false;
       });
     } catch (e) {

@@ -9,6 +9,33 @@ class UserController with ChangeNotifier {
   GraphQLClient client = GraphQLConfig.clientToQuery();
   String? get loginResponse => _loginResponse;
 
+  Future<User> getMyDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final QueryOptions options = QueryOptions(
+      document: gql('''
+        query GetMyDetails(\$token: String!) {
+          getMyDetails(token: \$token) {
+            id
+            userName
+            fotografia
+            phonenumber
+          }
+        }
+      '''),
+      fetchPolicy: FetchPolicy.cacheAndNetwork,
+      variables: {'token': prefs.getString('authtoken')}, // Corrigido para 'authtoken'
+    );
+
+    final QueryResult result = await client.query(options);
+
+    if (result.hasException) {
+      throw result.exception!;
+    }
+
+    final Map<String, dynamic> userData = result.data!['getMyDetails'];
+    return User.fromJson(userData); // Supondo que você tenha um método para converter o JSON em um objeto User
+  }
+
   Future<bool> login(String username, String password) async {
     const String query = r'''
       query LoginUser($username: String!, $password: String!) {

@@ -1,10 +1,44 @@
+import 'package:churchdesktop/editation/edit.membro.dart';
 import 'package:flutter/material.dart';
+import 'package:churchdesktop/Controller/membro.controller.dart';
+import 'package:churchdesktop/View/dashboard/dashboard.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 
 class MembroDataSource extends DataTableSource {
   final List<Membro> membros;
+  final BuildContext context;
 
-  MembroDataSource(this.membros);
+  MembroDataSource(this.membros, this.context);
+
+  void deleteMembro(String id) async {
+    try {
+      if (await MembroController().deleteMembro(id)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Membro excluído com sucesso.'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+        // Atualiza a lista de membros após a exclusão
+        membros.removeWhere((membro) => membro.id == id);
+        notifyListeners(); // Notifica a DataTable que os dados mudaram
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erro ao excluir o membro.'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao excluir o membro: $e'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
 
   @override
   DataRow? getRow(int index) {
@@ -16,8 +50,20 @@ class MembroDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(Text(membro.codigoMembro)),
-        DataCell(Text(membro.nomeCompleto)),
+        DataCell(Text(membro.codigoMembro), onDoubleTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditMember(membro: membro),
+            ),
+          );
+        }),
+        DataCell(
+          Text(membro.nomeCompleto),
+          onTap: () {
+            deleteMembro(membro.id); // Chama o método de exclusão
+          },
+        ),
         DataCell(
           membro.fotografia.isNotEmpty
               ? Image.network(
