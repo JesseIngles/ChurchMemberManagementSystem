@@ -3,7 +3,7 @@ import { UpdateUserInput } from '@application/dto/update/update-user.input.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtAuthService } from '@infra/auth/jwt.service';
 import { PrismaService } from '@infra/data/client/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '@domain/entities/user.entity';
 import { ImageUploaderService } from './imageuploader.service';
 
@@ -12,13 +12,34 @@ export class UserService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly authService: JwtAuthService,
-    private readonly uploadService: ImageUploaderService
+    private readonly uploadService: ImageUploaderService,
   ) {}
+  getMyDetails(token: string) {
+    try {
+      const payload = this.authService.verify(token);
+      const userId = payload['sub'];
+      const user = this.prismaService.user.findUnique({
+        where: { id: userId},
+      });
+
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+
+      return user;
+    } catch (e) {
+      throw new UnauthorizedException('Invalid token');
+    }
+  }
+
   async create(createUserInput: CreateUserInput) {
     createUserInput.password = await bcrypt.hash(createUserInput.password, 10);
-    const fileName = `profile-${createUserInput.userName}-${Date.now()}`
-    createUserInput.fotografia = await this.uploadService.uploadImage(createUserInput.fotografia, fileName);
-    
+    const fileName = `profile-${createUserInput.userName}-${Date.now()}`;
+    createUserInput.fotografia = await this.uploadService.uploadImage(
+      createUserInput.fotografia,
+      fileName,
+    );
+
     return await this.prismaService.user.create({
       data: createUserInput,
     });

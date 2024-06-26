@@ -7,8 +7,8 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   Hive.initFlutter();
-   //if (!Hive.isBoxOpen('graphqlCache')) {
-  
+  //if (!Hive.isBoxOpen('graphqlCache')) {
+
   //}*/
   runApp(ChurchManagementApp());
 }

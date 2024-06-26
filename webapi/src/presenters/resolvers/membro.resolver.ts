@@ -9,8 +9,8 @@ export class MembroResolver {
   constructor(private readonly membroService: MembroService) {}
 
   @Mutation(() => Membro)
-  createMembro(@Args('createMembroInput') createMembroInput: CreateMembroInput) {
-    return this.membroService.create(createMembroInput);
+  async createMembro(@Args('createMembroInput') createMembroInput: CreateMembroInput) {
+    return await this.membroService.create(createMembroInput);
   }
 
   @Mutation(() => Membro)
@@ -19,7 +19,7 @@ export class MembroResolver {
   }
 
   @Mutation(() => Membro)
-  deleteMembro(@Args('deleteMembro') id: string) {
+  deleteMembro(@Args('id') id: string) {
     return this.membroService.delete(id);
   } 
 
@@ -35,6 +35,11 @@ export class MembroResolver {
     return this.membroService.findOne(id);
   }
 
+  @Query(() => [Membro], {name:"MembrosFiltrados"})
+  searchMembros(@Args('name', {type: () => String}) search:string)
+  {
+    return this.membroService.encontrarMembros(search);
+  }
   
 }
 

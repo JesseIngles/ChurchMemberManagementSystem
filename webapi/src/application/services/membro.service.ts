@@ -6,6 +6,7 @@ import { ImageUploaderService } from './imageuploader.service';
 
 @Injectable()
 export class MembroService {
+  
   constructor(private readonly prismaservice: PrismaService,private readonly uploadService: ImageUploaderService) {}
 
   async create(createMembroInput: CreateMembroInput) {
@@ -31,6 +32,16 @@ export class MembroService {
         nomeCompleto: updateMembroInput.nomeCompleto,
         phonenumber: updateMembroInput.phonenumber,
       },
+    });
+  }
+  encontrarMembros(search: string) {
+    return this.prismaservice.membro.findMany({
+      where: {
+        nomeCompleto: {
+          contains: search,
+          mode: "insensitive"
+        }
+      }
     });
   }
 

@@ -41,4 +41,9 @@ export class UserResolver {
     const acesstoken = await this.userService.login(username, password);
     return acesstoken ;
   }
+
+  @Query(() => User)
+  getMyDetails(@Args('token') token: string) {
+    return this.userService.getMyDetails(token);
+  }
 }
