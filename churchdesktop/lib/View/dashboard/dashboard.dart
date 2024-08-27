@@ -2,7 +2,6 @@ import 'package:churchdesktop/Controller/membro.controller.dart';
 import 'package:churchdesktop/Controller/ministro.controller.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 import 'package:churchdesktop/Model/ministro.model.dart';
-import 'package:churchdesktop/Model/user.model.dart';
 import 'package:churchdesktop/View/registration/register.membro.dart';
 import 'package:churchdesktop/View/search/search.dart';
 import 'package:churchdesktop/widgets/menu.dart';

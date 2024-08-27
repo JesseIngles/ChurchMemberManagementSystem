@@ -1,5 +1,4 @@
 import 'package:churchdesktop/widgets/listaMembros.dart';
-import 'package:churchdesktop/widgets/listaMinistros.dart';
 import 'package:flutter/material.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 import 'package:churchdesktop/Controller/membro.controller.dart';

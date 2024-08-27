@@ -1,6 +1,4 @@
 import 'package:churchdesktop/View/search/search.dart';
-import 'package:churchdesktop/widgets/demo.dart';
-import 'package:churchdesktop/widgets/listaMinistros.dart';
 import 'package:churchdesktop/widgets/menu.dart';
 import 'package:churchdesktop/widgets/widgetModel/PaginatedTableMinistros.dart';
 import 'package:flutter/material.dart';

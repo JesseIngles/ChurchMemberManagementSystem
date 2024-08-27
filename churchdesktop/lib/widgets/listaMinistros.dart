@@ -1,6 +1,5 @@
 import 'package:churchdesktop/Model/ministro.model.dart';
 import 'package:flutter/material.dart';
-import 'package:churchdesktop/Model/membro.model.dart';
 
 class MinistroDataSource extends DataTableSource {
   final List<Ministro> ministros;

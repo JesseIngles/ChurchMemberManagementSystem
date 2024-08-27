@@ -1,7 +1,6 @@
 import 'package:churchdesktop/View/dashboard/dashboard.dart';
 import 'package:churchdesktop/View/membros/membros.dart';
 import 'package:churchdesktop/View/ministros/ministros.dart';
-import 'package:churchdesktop/widgets/listaMembros.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatefulWidget {

@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 import 'package:churchdesktop/Controller/membro.controller.dart';
 

@@ -1,7 +1,6 @@
 import 'package:churchdesktop/editation/edit.membro.dart';
 import 'package:flutter/material.dart';
 import 'package:churchdesktop/Controller/membro.controller.dart';
-import 'package:churchdesktop/View/dashboard/dashboard.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 
 class MembroDataSource extends DataTableSource {

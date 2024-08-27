@@ -33,10 +33,6 @@ export class MinistoService {
   }
 
   async findAllMinistro() {
-    return await this.prismaService.ministro.findMany({
-      /*include: {
-        membro: true
-      }*/
-    });
+    return await this.prismaService.ministro.findMany();
   }
 }

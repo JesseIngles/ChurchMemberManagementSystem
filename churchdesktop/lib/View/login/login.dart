@@ -2,7 +2,6 @@ import 'package:churchdesktop/Controller/user.controller.dart';
 import 'package:churchdesktop/View/dashboard/dashboard.dart';
 import 'package:churchdesktop/View/registration/registration.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
