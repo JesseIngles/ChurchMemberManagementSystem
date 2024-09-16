@@ -27,6 +27,8 @@ class _PaginatedTableDemoState extends State<PaginatedTableDemo> {
         _membroDataSource = MembroDataSource(membros, context);
         _isLoading = false;
       });
+
+      
     } catch (e) {
       showMessage(e.toString());
       setState(() {
@@ -44,7 +46,7 @@ class _PaginatedTableDemoState extends State<PaginatedTableDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.withOpacity(0.4),
       body: _isLoading
     ? Center(child: CircularProgressIndicator())
     : _membroDataSource != null

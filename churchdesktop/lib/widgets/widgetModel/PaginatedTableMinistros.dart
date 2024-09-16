@@ -80,9 +80,7 @@ class _PaginatedTableMinistrosState extends State<PaginatedTableMinistros> {
                               DataCell(Image.network(ministro.membro.fotografia)),
                               DataCell(Text(ministro.membro.phonenumber)),
                               DataCell(Text(ministro.membro.localNascimento)),
-                              DataCell(
-                                Text(ministro.membro.dataNascimento.toString()),
-                              ),
+                              DataCell(Text(ministro.membro.dataNascimento.toString())),
                               DataCell(
                                 IconButton(
                                   icon: Icon(Icons.delete),

@@ -117,7 +117,7 @@ class _RegisterMemberState extends State<RegisterMember> {
                               color: Colors.amber[700],
                               size: 60,
                             )
-                          : Image.file(_image!, height: 100),
+                          : ClipOval(child: Image.file(_image!, height: 100,fit: BoxFit.cover)),
                     ),
                   ),
                   TextFormField(
@@ -147,6 +147,7 @@ class _RegisterMemberState extends State<RegisterMember> {
                         : null,
                     onSaved: (value) => _localNascimento = value,
                   ),
+
                   TextFormField(
                     decoration:
                         InputDecoration(labelText: 'Data de Nascimento'),
@@ -203,7 +204,7 @@ class _RegisterMemberState extends State<RegisterMember> {
                           borderRadius: BorderRadius.circular(5)),
                       child: Center(
                         child: Text(
-                          'Entrar',
+                          'Cadastrar',
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.black,

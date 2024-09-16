@@ -14,7 +14,7 @@ model User {
   password     String
   phonenumber  String @default("000-000-000") @unique
 }
-
+  
 model Membro {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
   codigoMembro        String   @unique

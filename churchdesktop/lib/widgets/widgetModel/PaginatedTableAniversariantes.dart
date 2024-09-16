@@ -81,7 +81,6 @@ class _PaginatedtableAniversariantesState
           ? Center(child: CircularProgressIndicator())
           : _membroDataSource != null
               ? SingleChildScrollView(
-                
                   child: PaginatedDataTable(
                     rowsPerPage: _rowsPerPage,
                     columns: [

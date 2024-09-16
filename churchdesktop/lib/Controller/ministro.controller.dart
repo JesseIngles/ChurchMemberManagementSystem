@@ -42,7 +42,7 @@ class MinistroController {
   }
 
   Future<List<Ministro>> getAllMinistros() async {
-    const String query = r'''
+    /*const String query = r'''
     query {
     Ministros {
       dataBaptismoEsp
@@ -59,16 +59,16 @@ class MinistroController {
         dataBaptismoAguas
         estadoCivil
       }
-  }
-}
-''';
+      }
+    }
+    ''';
 
     final QueryOptions options = QueryOptions(document: gql(query));
     final QueryResult result = await client.query(options);
 
     if (result.hasException) {
       print(result.exception);
-      throw Exception('Erro ao buscar ministros: ${result.exception}');
+    //  throw Exception('Erro ao buscar ministros: ${result.exception}');
     }
 
     // Verifica se 'Ministros' está presente e não é nulo
@@ -79,6 +79,7 @@ class MinistroController {
     }
 
     _ministros = Ministro.fromJsonList(ministrosData);
+    */
     return _ministros!;
   }
 

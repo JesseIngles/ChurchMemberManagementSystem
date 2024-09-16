@@ -61,10 +61,7 @@ class _PaginatedTableDemoState extends State<PaginatedTableDemo> {
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
                     columns: [
-                      DataColumn(
-                        label: Text('Código Membro'),
-
-                      ),
+                      DataColumn(label: Text('Código Membro')),
                       DataColumn(label: Text('Nome Completo')),
                       DataColumn(label: Text('Fotografia')),
                       DataColumn(label: Text('Telefone')),
@@ -76,8 +73,7 @@ class _PaginatedTableDemoState extends State<PaginatedTableDemo> {
                         .map(
                           (membro) => DataRow(
                             cells: [
-                              DataCell(Text(membro.codigoMembro),
-                                  ),
+                              DataCell(Text(membro.codigoMembro)),
                               DataCell(Text(membro.nomeCompleto)),
                               DataCell(Image.network(membro.fotografia)),
                               DataCell(Text(membro.phonenumber)),

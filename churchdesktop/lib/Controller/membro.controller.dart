@@ -87,7 +87,7 @@ class MembroController {
   }
 
   Future<List<Membro>> getAllMembros() async {
-    const String query = r'''
+    /*const String query = r'''
       query {
         findAllMembros {
           id
@@ -112,6 +112,20 @@ class MembroController {
     }
 
     _membros = Membro.fromJsonList(result.data?['findAllMembros']);
+    
+    var membro = Membro(
+        id: "id",
+        codigoMembro: "codigoMembro",
+        nomeCompleto: "nomeCompleto",
+        fotografia: "/fotografia",
+        phonenumber: "phonenumber",
+        localNascimento: "localNascimento",
+        dataNascimento: "dataNascimento",
+        dataBaptismoEsp: "dataBaptismoEsp",
+        dataBaptismoAguas: "dataBaptismoAguas",
+        estadoCivil: "estadoCivil");
+    _membros?.add(membro);
+    */
     return _membros!;
   }
 

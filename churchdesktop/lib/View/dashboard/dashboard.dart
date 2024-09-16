@@ -2,8 +2,8 @@ import 'package:churchdesktop/Controller/membro.controller.dart';
 import 'package:churchdesktop/Controller/ministro.controller.dart';
 import 'package:churchdesktop/Model/membro.model.dart';
 import 'package:churchdesktop/Model/ministro.model.dart';
-import 'package:churchdesktop/View/registration/register.membro.dart';
-import 'package:churchdesktop/View/search/search.dart';
+
+import 'package:churchdesktop/widgets/CommomHeader.dart';
 import 'package:churchdesktop/widgets/menu.dart';
 import 'package:churchdesktop/widgets/widgetModel/PaginatedTableAniversariantes.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +16,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int totalmembros = 0,
-      totalMinistros = 0,
-      homens = 0,
-      mulheres = 0,
-      criancas = 0;
-  
+  int totalmembros = 130, totalMinistros = 10, homens = 50, mulheres = 80;
+
   void fetchData() async {
     List<Membro> membros = await MembroController().getAllMembros();
     setState(() {
@@ -37,7 +33,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    fetchData();
+    //fetchData();
   }
 
   @override
@@ -56,123 +52,29 @@ class _DashboardState extends State<Dashboard> {
               flex: 8,
               child: Container(
                 width: 200,
-                margin: EdgeInsets.only(left: 10, top: 10, right: 20),
+                margin: EdgeInsets.only(left: 10 /*, right: 20*/),
                 child: Column(
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Search(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              height: 40,
-                              width: 650,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.1),
-                                    offset: Offset(0, 3),
-                                    blurRadius: 7,
-                                    spreadRadius: 5,
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(width: 10),
-                                  Icon(Icons.search),
-                                  SizedBox(width: 10),
-                                  Text('Pesquise...'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => RegisterMember(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 5,
-                                      color: Colors.green,
-                                    ),
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 15),
-                              Icon(Icons.notifications),
-                              SizedBox(width: 40),
-                              CircleAvatar(
-                                minRadius: 15,
-                                child: Image.asset('assets/logotipo.png'),
-                              ),
-                              SizedBox(width: 7),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Cody Fisher',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 7),
-                                  Text(
-                                    'Gerente',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      child: header(),
                     ),
                     Expanded(
                       flex: 9,
                       child: Container(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withOpacity(0.4),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(height: 30),
                             Container(
                               height: 130,
-                              padding: const EdgeInsets.only(left: 30),
+                              padding: const EdgeInsets.only(left: 20),
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      width: 260,
+                                      width: 240,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
@@ -207,7 +109,7 @@ class _DashboardState extends State<Dashboard> {
                                   SizedBox(width: 20),
                                   Expanded(
                                     child: Container(
-                                      width: 260,
+                                      width: 240,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
@@ -242,7 +144,7 @@ class _DashboardState extends State<Dashboard> {
                                   SizedBox(width: 20),
                                   Expanded(
                                     child: Container(
-                                      width: 260,
+                                      width: 240, 
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white,
@@ -251,29 +153,54 @@ class _DashboardState extends State<Dashboard> {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Text(
-                                            'Homens | Mulheres | Crianças',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 14,
-                                            ),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                'HOMENS',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              SizedBox(height: 40),
+                                              Text(
+                                                '80',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(height: 40),
-                                          Text(
-                                            '0  |  0 |   0',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
+                                          SizedBox(width: 20),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                'MULHERES',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              SizedBox(height: 40),
+                                              Text(
+                                                '50',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
+                                  SizedBox(width: 20),
                                 ],
                               ),
                             ),
@@ -288,7 +215,7 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                   color: Colors.white,
                                 ),
-                                margin: EdgeInsets.only(left: 35, right: 5),
+                                margin: EdgeInsets.only(left: 20, right: 20),
                                 child: Column(
                                   children: [
                                     Expanded(
